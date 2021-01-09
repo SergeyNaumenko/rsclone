@@ -1,12 +1,11 @@
 import React from 'react';
 import { Footer } from './components/footer.component';
+import { Header } from './components/header.commponent';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        init commit
-      </header>
+      <Header/>
       <Footer/>
     </div>
   );
