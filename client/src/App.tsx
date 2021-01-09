@@ -1,4 +1,5 @@
 import React from 'react';
+import { Header } from './components/header.commponent';
 import { Footer } from './components/footer.component';
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         init commit
       </header>
       <button onClick={clickHandler}>Fetch data</button>
+      <Header/>
       <Footer/>
     </div>
   );
