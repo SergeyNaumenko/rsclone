@@ -1,16 +1,19 @@
 import React from 'react';
 
-type gitHubDataArray = { link: string, name: string }[];
+type gitHubDataArray = { id: number, link: string, name: string }[];
 
 export const Footer: React.FC = () => {
     const gitHubData:gitHubDataArray = [
       {
+        id: 0,
         link: 'https://github.com/KrasovskyAlexander',
         name: 'Alexander Krasovsky',
       },{
+        id: 1,
         link: 'https://github.com/vitalibury',
         name: 'Vitali Bury',
       },{
+        id: 2,
         link: 'https://github.com/SergeyNaumenko',
         name: 'Sergey Naumenko',
       },
@@ -24,7 +27,7 @@ export const Footer: React.FC = () => {
               <ul>
                 { gitHubData.map((item) => {
                   return(
-                    <li><a className="grey-text text-lighten-3" href="{item.link}">{item.name}</a></li>
+                    <li key={item.id}><a className="grey-text text-lighten-3" href="{item.link}">{item.name}</a></li>
                   );
                 })}
               </ul>
