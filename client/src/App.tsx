@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from './components/header.commponent';
 import { Footer } from './components/footer.component';
+import MovieApiService from './services/movieApiService';
 
 const App: React.FC = () => {
 
@@ -16,6 +17,13 @@ const App: React.FC = () => {
     console.log(data);
     return data;
   }
+
+  const movieApiService = new MovieApiService();
+  const genres = movieApiService.getGenres();
+  console.log(genres)
+
+  const topRated = movieApiService.getTopRatedMovies();
+  console.log(topRated)
 
   return (
     <div className="App">
