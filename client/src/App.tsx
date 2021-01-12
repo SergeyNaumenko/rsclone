@@ -10,7 +10,7 @@ const App: React.FC = () => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({login: 'atgbt',password: '33333'})
+        body: JSON.stringify({login: 'sos',password: '1444444'})
     });
     const data = await res.json();
     console.log(data);

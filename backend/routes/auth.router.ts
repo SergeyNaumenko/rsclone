@@ -1,14 +1,13 @@
-const {Router} = require('express');
-const User = require('../models/User');
+import {Router, Request, Response} from 'express';
+import User from '../models/User';
 const router = Router();
 
 
-router.post('/reg', async (req, res) =>{
-    
+router.post('/reg', async (req:Request, res:Response) =>{
     const {login, password} = req.body;
 
     const candidate = await User.findOne({ login })
-    console.log('a')
+    
     if (candidate) {
       return res.status(400).json({ message: 'Такой пользователь уже существует' })
     }
@@ -19,7 +18,7 @@ router.post('/reg', async (req, res) =>{
     res.status(201).json({ message: 'Пользователь создан' })
 })
 
-router.get('/data', (req, res) => {
+router.get('/data', (req:Request, res:Response) => {
     User.find({  })
     .then((data) => {
         console.log('Data:', data);
