@@ -4,6 +4,7 @@ const router = Router();
 
 
 router.post('/reg', async (req:Request, res:Response) =>{
+    console.log(req.body);
     const {login, password} = req.body;
 
     const candidate = await User.findOne({ login })
