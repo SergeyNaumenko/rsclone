@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Header } from './components/header.commponent';
+import { Header } from './components/header.component';
 import { Footer } from './components/footer.component';
 import MovieApiService from './services/movieApiService';
-import { MovieApiServiceProvider } from './components/movie-api-service-context';
+import { MovieApiServiceProvider } from './components/movie_service_context';
+import { GenresList } from './components/movieDB-lists';
 
 export default class App extends Component {
   state = {
@@ -14,7 +15,7 @@ export default class App extends Component {
       <div className="App">
         <Header/>
         <MovieApiServiceProvider value={this.state.movieApiService} >
-
+          <GenresList/>
         </MovieApiServiceProvider>
         <Footer/>
       </div>

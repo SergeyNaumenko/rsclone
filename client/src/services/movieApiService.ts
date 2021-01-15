@@ -3,7 +3,7 @@ export default class MovieApiService {
   private baseUrl: string = 'https://api.themoviedb.org/3/';
   private baseParams: string = `api_key=${this.apiKey}&page=1&language=en-US`;
 
-  private async getResource(path: string) {
+  private getResource = async (path: string) => {
     const url: string = `${this.baseUrl}${path}`;
     const response = await fetch(url);
 
@@ -15,29 +15,29 @@ export default class MovieApiService {
     return json;
   }
 
-  public async getGenres(type: string = 'movie') {
+  public getGenres = async (type: string = 'movie') => {
     const path: string = `genre/${type}/list?${this.baseParams}`;
     const json = await this.getResource(path);
     return json.genres;
   }
 
-  public async getTopRatedMovies() {
+  public getTopRatedMovies = async () => {
     const path: string = `movie/top_rated?${this.baseParams}&page=1`;
     const json = await this.getResource(path);
     return json.results.map(this.transformMovie);
   }
 
-  public async getByGenres() {
+  public getByGenres = async () => {
     return this.discoverMovies('&with_genres=28');
   }
 
-  private async discoverMovies(params: string) {
+  private discoverMovies = async (params: string) => {
     const path = `discover/movie?${this.baseParams}&sort_by=popularity.desc&page=1`;
     const json = await this.getResource(path);
     return json.results.map(this.transformMovie);
   }
 
-  private transformMovie(movie: any) {
+  private transformMovie = (movie: any) => {
     const imagesBaseUrl: string = 'https://image.tmdb.org/t/p/original';
 
     return {
