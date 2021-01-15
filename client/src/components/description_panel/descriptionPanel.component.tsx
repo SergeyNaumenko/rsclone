@@ -1,71 +1,89 @@
 import React from "react";
-import {createIntl, createIntlCache} from 'react-intl';
+import ISO639 from 'iso-639-1';
+import './descriptionPanel.css';
+interface DescriptionData{
+  posterPath: string,
+  title: string,
+  releaseDate: string,
+  genreIds: string,
+  popularity: number,
+  originalLanguage: string,
+  voteCount: number,
+  voteAverage: number,
+  adult: boolean,
+  overview: string,
+}
 
-const DescriptionPanel: React.FC = () => {
+const DescriptionPanel = (props: DescriptionData) => {
   const {
     posterPath,
     title,
     releaseDate,
-    genres,
+    genreIds,
     popularity,
     originalLanguage,
     voteCount,
     voteAverage,
     adult,
     overview,
-  } = this.props;
+  } = props;
 
-  const addGenres = (arr: Array<object>) => {
-  };
-
-  const cache = createIntlCache()
-  const intl = createIntl({
-    locale: 'en-US',
-    messages: {}
-  }, cache);
+  // const addGenres = (arr: object[]) => {
+  //   arr.reduce((result, item) => {
+  //     result += `${item}/`;
+  //     return result;
+  //   }, '');
+  // };
   
   return (
-    <div className="description-panel">
-      <div className="poster"
-        style={{backgroundImage: `url(${posterPath})`}}></div>
-      <div className="info">
+    <div className="description-panel card-panel row">
+      <div className="poster col s12 m12 l4 xl4"
+        style={{backgroundImage: `url(${posterPath})`}}
+        ></div>
+      <div className="info black-text col s12 m12 l7 xl7 
+        offset-l1 offset-xl1">
         <div className="title">
-          <span>{title}</span>
+          <h4>{title}</h4>
         </div>
-        <div className="about">
-          <span>About movie:</span>
-        </div>
+        <hr/>
         <div className='release'>
-          <span>Date of release:</span>
-          <span>{releaseDate ? releaseDate : '-'}</span>
+          <span className='category'>Date of release:</span>
+          <span className='description'>{releaseDate ? releaseDate : '-'}</span>
         </div>
+        <hr/>
         <div className='genres'>
-          <span>Genres:</span>
-          <span>{this.addGenres(genres)}</span>
+          <span className='category'>Genres:</span>
+          <span className='description'>{genreIds}</span>
         </div>
+        <hr/>
         <div className='popularity'>
-          <span>Popularuty:</span>
-          <span>{popularity}</span>
+          <span className='category'>Popularuty:</span>
+          <span className='description'>{popularity}</span>
         </div>
+        <hr/>
         <div className='laguage'>
-          <span>Language:</span>
-          <span>{intl.formatDisplayName(originalLanguage, {type: 'language'})}</span>
+          <span className='category'>Language:</span>
+          <span className='description'>{ISO639.getName(originalLanguage)}</span>
         </div>
+        <hr/>
         <div className='vote-count'>
-          <span>Number of votes:</span>
-          <span>{voteCount}</span>
+          <span className='category'>Number of votes:</span>
+          <span className='description'>{voteCount}</span>
         </div>
+        <hr/>
         <div className='vote-average'>
-          <span>Average rating:</span>
-          <span>{voteAverage}</span>
+          <span className='category'>Average rating:</span>
+          <span className='description'>{voteAverage}</span>
         </div>
+        <hr/>
         <div className='adult'>
-          <span>Adult movie:</span>
-          <span>{adult ? 'Yes' : 'No'}</span>
+          <span className='category'>Adult movie:</span>
+          <span className='description'>{adult ? 'Yes' : 'No'}</span>
         </div>
+        <hr/>
         <div className='overview'>
-          <span>Movie overview:</span>
-          <span>{overview}</span>
+          <span className='category'>Movie overview:</span>
+          <span className='description'>{overview}</span>
         </div>
       </div>
     </div>
