@@ -1,32 +1,24 @@
-import React from 'react';
-import { Header } from './components/header.commponent';
+import React, { Component } from 'react';
+import { Header } from './components/header.component';
 import { Footer } from './components/footer.component';
+import MovieApiService from './services/movieApiService';
+import { MovieApiServiceProvider } from './components/movie_service_context';
+import { GenresList } from './components/movieDB-lists';
 
-const App: React.FC = () => {
-
-  const clickHandler = async() => {
-    const res = await fetch('http://localhost:5000/api/auth/reg',{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({login: 'sos',password: '1444444'})
-    });
-    const data = await res.json();
-    console.log(data);
-    return data;
+export default class App extends Component {
+  state = {
+    movieApiService: new MovieApiService()
+  };
+  
+  render() {
+    return (
+      <div className="App">
+        <Header/>
+        <MovieApiServiceProvider value={this.state.movieApiService} >
+          <GenresList/>
+        </MovieApiServiceProvider>
+        <Footer/>
+      </div>
+    );
   }
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        init commit
-      </header>
-      <button onClick={clickHandler}>Fetch data</button>
-      <Header/>
-      <Footer/>
-    </div>
-  );
 };
-
-export default App;
