@@ -1,32 +1,94 @@
 import React from 'react';
-import { Header } from './components/header.commponent';
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import { Header } from './components/header.component';
 import { Footer } from './components/footer.component';
+import  AuthPage  from './pages/AuthPage';
+import config from './config';
+import MovieApiService from './services/movieApiService';
+import { MovieApiServiceProvider } from './components/movie_service_context';
+import { GenresList } from './components/movieDB-lists';
 
-const App: React.FC = () => {
-
-  const clickHandler = async() => {
-    const res = await fetch('http://localhost:5000/api/auth/reg',{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({login: 'atgbt',password: '33333'})
-    });
-    const data = await res.json();
-    console.log(data);
-    return data;
+interface MyState{
+  isAuth:boolean,
+  jwtToken:any,
+  id:any
+}
+export default class App extends React.Component<any,MyState> {
+  state = {
+    movieApiService: new MovieApiService(),
+    isAuth: false,
+    jwtToken: null,
+    id: null
+  }
+  componentDidMount(){
+    const data:any = localStorage.getItem(config.localName);
+    const a = JSON.parse(data);
+    if (a && a.token) {
+      this.login(a.token, a.userId);
+    } 
   }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        init commit
-      </header>
-      <button onClick={clickHandler}>Fetch data</button>
-      <Header/>
-      <Footer/>
-    </div>
-  );
-};
+  login = (jwtToken:string, userId:string):any => {
+    console.log(jwtToken,userId);
+    localStorage.setItem(config.localName, JSON.stringify({
+      userId: userId, token: jwtToken
+    }))
+    this.setState({
+      id: userId, jwtToken: jwtToken,
+      isAuth:true
+    })
+  }
 
-export default App;
+
+  logout = ():any => {
+    this.setState({
+      isAuth: false,
+      jwtToken:null,id:null
+    });
+    localStorage.removeItem(config.localName);
+  }
+
+  routess(isAuth:boolean){
+    if (isAuth) {
+      return (
+        <Switch>
+          <Route path="/homepage" exact>
+            <Header logout = {this.logout}/>
+            <MovieApiServiceProvider value={this.state.movieApiService} >
+              <GenresList/>
+            </MovieApiServiceProvider>
+            <Footer/>
+          </Route>
+          <Redirect to="/homepage" />
+        </Switch>
+      )
+    }
+  
+    return (
+      <Switch>
+        <Route path="/" exact>
+          <AuthPage login = {this.login}/>
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    )
+  }
+
+  render(){ 
+    const { isAuth } = this.state;
+    
+
+    return (
+      <BrowserRouter>
+        <div className="App">
+          {this.routess(isAuth)}
+        </div>
+      </BrowserRouter>
+    );
+  }
+}
