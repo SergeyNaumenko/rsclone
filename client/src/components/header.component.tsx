@@ -1,7 +1,9 @@
 import React from 'react';
 import { SearchForm } from './search/search.componeent';
-
-export const Header: React.FC = () => {
+interface MyProps {
+  logout:any
+}
+export const Header: React.FC<MyProps> = ({logout}:MyProps) => {
   return (
     <header className="page-header teal">
       <div className="container">
@@ -13,7 +15,9 @@ export const Header: React.FC = () => {
                 <SearchForm/>
               </li>
               <li><a href="/"><i className="material-icons">account_circle</i></a></li>
+              <li><button onClick={() => logout()}>logout</button></li>
             </ul>
+            
           </div>
         </nav>
       </div>
