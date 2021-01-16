@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
               <ul>
                 { gitHubData.map((item) => {
                   return(
-                    <li key={item.id}><a className="grey-text text-lighten-3" href="{item.link}">{item.name}</a></li>
+                    <li key={item.id}><a className="grey-text text-lighten-3" href={item.link}>{item.name}</a></li>
                   );
                 })}
               </ul>

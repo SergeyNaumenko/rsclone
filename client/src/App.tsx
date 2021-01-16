@@ -5,18 +5,22 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import { Header } from './components/header.commponent';
+import { Header } from './components/header.component';
 import { Footer } from './components/footer.component';
 import  AuthPage  from './pages/AuthPage';
 import config from './config';
+import MovieApiService from './services/movieApiService';
+import { MovieApiServiceProvider } from './components/movie_service_context';
+import { GenresList } from './components/movieDB-lists';
 
 interface MyState{
   isAuth:boolean,
   jwtToken:any,
   id:any
 }
-class App extends React.Component<any,MyState> {
+export default class App extends React.Component<any,MyState> {
   state = {
+    movieApiService: new MovieApiService(),
     isAuth: false,
     jwtToken: null,
     id: null
@@ -54,10 +58,10 @@ class App extends React.Component<any,MyState> {
       return (
         <Switch>
           <Route path="/homepage" exact>
-            <header className="App-header">
-            init commit
-            </header>
             <Header logout = {this.logout}/>
+            <MovieApiServiceProvider value={this.state.movieApiService} >
+              <GenresList/>
+            </MovieApiServiceProvider>
             <Footer/>
           </Route>
           <Redirect to="/homepage" />
@@ -87,6 +91,4 @@ class App extends React.Component<any,MyState> {
       </BrowserRouter>
     );
   }
-};
-
-export default App;
+}
