@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "noImplicitAny": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -20,7 +21,8 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
+  "compileOnSave": false,
   "include": [
-    "src"
+    "src", "custom.d.ts"
   ]
 }

@@ -1,3 +1,3 @@
 export default {
-    localName: "user"
-}
+  localName: 'user',
+};
