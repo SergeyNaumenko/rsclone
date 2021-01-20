@@ -16,12 +16,28 @@ const mapPersonMethodsToProps = (movieApiService: any) => {
   };
 };
 
+const renderMovieListItem = ({ title }:{title:string}) => <span>{ title }</span>;
+
+const mapTopRatedMethodToProps = (movieApiService: any) => {
+  
+  return {
+    getData: movieApiService.getTopRatedMovies
+  };
+};
+
 const GenresList = compose(
                      withMovieService(mapPersonMethodsToProps),
                      withData,
                      withChildFunction(renderName)
                    )(ItemList);
 
+const TopRatedList = compose(
+                      withMovieService(mapTopRatedMethodToProps),
+                      withData,
+                      withChildFunction(renderMovieListItem)
+                    )(ItemList);
+
 export {
-  GenresList
+  GenresList,
+  TopRatedList,
 };

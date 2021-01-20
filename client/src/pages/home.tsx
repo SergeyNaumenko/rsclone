@@ -1,7 +1,10 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import ItemList from '../components/item-list';
-import { GenresList } from '../components/movieDB-lists';
+import { 
+  GenresList,
+  TopRatedList,
+} from '../components/movieDB-lists';
 
 interface pageProps{
   history:any,
@@ -10,12 +13,13 @@ interface pageProps{
 
 const HomepageComponent = ({ history, match}:pageProps) => {
   const { listName } = match.params;
+  console.log(listName);
   const listItems = [
     {
       id: 0,
       name: 'latest',
       displayName: 'Latest',
-      path: <GenresList/>,
+      list: <TopRatedList/>,
     },
     {
       id: 1, 
@@ -27,7 +31,7 @@ const HomepageComponent = ({ history, match}:pageProps) => {
       id: 2,
       name: 'top',
       displayName: 'Top Rated',
-      list: <GenresList/>,
+      list: <TopRatedList/>,
     },
     {
       id: 3,
