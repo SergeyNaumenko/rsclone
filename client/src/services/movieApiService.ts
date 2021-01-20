@@ -1,44 +1,48 @@
 export default class MovieApiService {
-  private apiKey: string = 'd59637b83d0355b53f5e01b07ba35228';
-  private baseUrl: string = 'https://api.themoviedb.org/3/';
-  private baseParams: string = `api_key=${this.apiKey}&page=1&language=en-US`;
+  private apiKey = 'd59637b83d0355b53f5e01b07ba35228';
+
+  private baseUrl = 'https://api.themoviedb.org/3/';
+
+  private baseParams = `api_key=${this.apiKey}&page=1&language=en-US`;
 
   private getResource = async (path: string) => {
-    const url: string = `${this.baseUrl}${path}`;
+    const url = `${this.baseUrl}${path}`;
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Could not fetch ${url}, response code is ${response.status}`);
+      throw new Error(
+        `Could not fetch ${url}, response code is ${response.status}`
+      );
     }
 
     const json = await response.json();
     return json;
-  }
+  };
 
-  public getGenres = async (type: string = 'movie') => {
-    const path: string = `genre/${type}/list?${this.baseParams}`;
+  public getGenres = async (type = 'movie'): Promise<any> => {
+    const path = `genre/${type}/list?${this.baseParams}`;
     const json = await this.getResource(path);
     return json.genres;
-  }
+  };
 
-  public getTopRatedMovies = async () => {
-    const path: string = `movie/top_rated?${this.baseParams}&page=1`;
+  public getTopRatedMovies = async (): Promise<string[]> => {
+    const path = `movie/top_rated?${this.baseParams}&page=1`;
     const json = await this.getResource(path);
     return json.results.map(this.transformMovie);
-  }
+  };
 
-  public getByGenres = async () => {
-    return this.discoverMovies('&with_genres=28');
-  }
+  public getByGenres = async (): Promise<string> => {
+    return this.discoverMovies(); // ('&with_genres=28')
+  };
 
-  private discoverMovies = async (params: string) => {
+  private discoverMovies = async () => {
     const path = `discover/movie?${this.baseParams}&sort_by=popularity.desc&page=1`;
     const json = await this.getResource(path);
     return json.results.map(this.transformMovie);
-  }
+  };
 
   private transformMovie = (movie: any) => {
-    const imagesBaseUrl: string = 'https://image.tmdb.org/t/p/original';
+    const imagesBaseUrl = 'https://image.tmdb.org/t/p/original';
 
     return {
       adult: movie.adult,
@@ -53,8 +57,7 @@ export default class MovieApiService {
       releaseDate: movie.release_date,
       title: movie.title,
       voteAverage: movie.vote_average,
-      voteCount: movie.vote_count
-    }
-
-  }
+      voteCount: movie.vote_count,
+    };
+  };
 }

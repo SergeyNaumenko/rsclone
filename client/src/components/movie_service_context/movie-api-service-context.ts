@@ -2,10 +2,7 @@ import React from 'react';
 
 const {
   Provider: MovieApiServiceProvider,
-  Consumer: MovieApiServiceConsumer
+  Consumer: MovieApiServiceConsumer,
 } = React.createContext({});
 
-export {
-  MovieApiServiceProvider,
-  MovieApiServiceConsumer
-};
+export { MovieApiServiceProvider, MovieApiServiceConsumer };
