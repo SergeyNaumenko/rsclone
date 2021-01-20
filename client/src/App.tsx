@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/header.component';
 import Footer from './components/footer.component';
@@ -7,6 +7,7 @@ import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
 import GenresList from './components/movieDB-lists';
+import { HomepageComponent } from './pages';
 
 interface MyState {
   isAuth: boolean;
@@ -87,6 +88,25 @@ export default class App extends React.Component<any, MyState> {
     const { isAuth } = this.state;
 
     return (
+/*
+      <div className="App">
+        <Header/>
+        <main className="row">
+          <MovieApiServiceProvider value={this.state.movieApiService} >
+            <Router>
+              <Switch>
+                <Route path="/" exact component={HomepageComponent}/>
+                <Route path="/list/:listName?" exact component={HomepageComponent}/>
+
+                <Route path="/genres/:genre?" exact component={GenresList}/>
+                <Route render={() => <h2>Page not found</h2>} />
+              </Switch>
+            </Router>
+          </MovieApiServiceProvider>
+        </main>
+        <Footer/>
+      </div>
+*/
       <BrowserRouter>
         <div className="App">{this.routess(isAuth)}</div>
       </BrowserRouter>
