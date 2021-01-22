@@ -6,10 +6,11 @@ import AuthPage from './pages/AuthPage';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
-import GenresList from './components/movieDB-lists';
+import { GenresList } from './components/movieDB-lists';
 import { HomepageComponent } from './pages';
 
 interface MyState {
+  movieApiService: any,
   isAuth: boolean;
   jwtToken: any;
   id: any;
@@ -88,12 +89,12 @@ export default class App extends React.Component<any, MyState> {
     const { isAuth } = this.state;
 
     return (
-/*
+
       <div className="App">
-        <Header/>
+        <Header logout={this.logout} />
         <main className="row">
           <MovieApiServiceProvider value={this.state.movieApiService} >
-            <Router>
+            <BrowserRouter>
               <Switch>
                 <Route path="/" exact component={HomepageComponent}/>
                 <Route path="/list/:listName?" exact component={HomepageComponent}/>
@@ -101,15 +102,16 @@ export default class App extends React.Component<any, MyState> {
                 <Route path="/genres/:genre?" exact component={GenresList}/>
                 <Route render={() => <h2>Page not found</h2>} />
               </Switch>
-            </Router>
+            </BrowserRouter>
           </MovieApiServiceProvider>
         </main>
         <Footer/>
       </div>
-*/
-      <BrowserRouter>
+
+/*      <BrowserRouter>
         <div className="App">{this.routess(isAuth)}</div>
       </BrowserRouter>
+*/
     );
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchForm } from './search/search.componeent';
+import SearchForm from './search/search.componeent';
 
 interface MyProps {
   logout: any;

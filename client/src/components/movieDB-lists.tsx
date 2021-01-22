@@ -14,7 +14,7 @@ const mapPersonMethodsToProps = (movieApiService: any) => {
 const renderMovieListItem = ({ title }:{title:string}) => <span>{ title }</span>;
 
 const mapTopRatedMethodToProps = (movieApiService: any) => {
-  
+
   return {
     getData: movieApiService.getTopRatedMovies
   };
