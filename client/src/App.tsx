@@ -27,21 +27,20 @@ export default class App extends React.Component<any,MyState> {
   }
   componentDidMount(){
     const data:any = localStorage.getItem(config.localName);
-    const a = JSON.parse(data);
-    if (a && a.token) {
-      this.login(a.token, a.userId);
+    const login = JSON.parse(data);
+    if (login && login.token) {
+      this.login(login.token, login.userId);
     } 
   }
 
   login = (jwtToken:string, userId:string):any => {
-    console.log(jwtToken,userId);
-    localStorage.setItem(config.localName, JSON.stringify({
-      userId: userId, token: jwtToken
-    }))
     this.setState({
       id: userId, jwtToken: jwtToken,
       isAuth:true
     })
+    localStorage.setItem(config.localName, JSON.stringify({
+      userId: userId, token: jwtToken
+    }))
   }
 
 
