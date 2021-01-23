@@ -62,18 +62,18 @@ export default class App extends Component<any, MyState> {
   render() {
     const { isAuth } = this.state;
     console.log(isAuth);
-    if (!isAuth){
-      return (
-        <BrowserRouter>
-          <Switch>
-            <Route path="/" exact>
-              <AuthPage login={this.login} />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        </BrowserRouter>
-      );
-    }
+    // if (!isAuth){
+    //   return (
+    //     <BrowserRouter>
+    //       <Switch>
+    //         <Route path="/" exact>
+    //           <AuthPage login={this.login} />
+    //         </Route>
+    //         <Redirect to="/" />
+    //       </Switch>
+    //     </BrowserRouter>
+    //   );
+    // }
     return (
       <div className="App">
         <Header logout={this.logout} />
