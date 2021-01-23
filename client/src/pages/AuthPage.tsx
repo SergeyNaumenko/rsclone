@@ -1,7 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import ServerApi from '../services/serverApi';
+
+
 interface MyProps {
-  login:any
+  login: any;
 }
 interface MyState{
   login:string,
@@ -85,10 +89,11 @@ export default class AuthPage extends React.Component <MyProps,MyState>{
                   Регистрация
                 </button>
               </div>
+
             </div>
           </div>
         </div>
-      )
-        
-    }
+      
+    );
+  }
 }

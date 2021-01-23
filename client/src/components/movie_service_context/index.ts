@@ -1,9 +1,6 @@
 import {
   MovieApiServiceProvider,
-  MovieApiServiceConsumer
+  MovieApiServiceConsumer,
 } from './movie-api-service-context';
 
-export {
-  MovieApiServiceProvider,
-  MovieApiServiceConsumer
-};
+export { MovieApiServiceProvider, MovieApiServiceConsumer };
