@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import ItemList from '../components/item-list';
-import { 
+import ItemList from '../components/list/list.component';
+import {
   GenresList,
   TopRatedList,
 } from '../components/movieDB-lists';
@@ -22,7 +22,7 @@ const HomepageComponent = ({ history, match}:pageProps) => {
       list: <TopRatedList/>,
     },
     {
-      id: 1, 
+      id: 1,
       name: 'popular',
       displayName: 'Popular',
       list: <GenresList/>,
@@ -43,7 +43,7 @@ const HomepageComponent = ({ history, match}:pageProps) => {
 
   const listItem: any = listItems.find((item) => item.name === listName);
   const listComponent: React.FC | React.Component = listItem ? listItem.list : null;
-  
+
   const onItemSelected = function(id:number) {
     history.push(id)
   };

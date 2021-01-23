@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemList from './item-list';
+import ItemList from './list/list.component';
 import { withData, withMovieService, withChildFunction } from './hoc';
 import compose from '../utils/compose';
 
