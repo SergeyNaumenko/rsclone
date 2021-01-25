@@ -55,9 +55,9 @@ const withData = (View) => {
         return <p>spinner</p>;
       }
 
-      if (error) {
+      /*if (error) {
         return <p>error</p>;
-      }
+      }*/
 
       return <View {...this.props} data={data} />;
     }

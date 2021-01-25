@@ -19,14 +19,32 @@ export default class MovieApiService {
     return json;
   };
 
-  public getGenres = async (type = 'movie'): Promise<any> => {
+  public getGenres = async (type = 'movie'): Promise<object[]> => {
     const path = `genre/${type}/list?${this.baseParams}`;
     const json = await this.getResource(path);
     return json.genres;
   };
 
-  public getTopRatedMovies = async (): Promise<string[]> => {
+  public getTopRatedMovies = async (): Promise<object[]> => {
     const path = `movie/top_rated?${this.baseParams}&page=1`;
+    const json = await this.getResource(path);
+    return json.results.map(this.transformMovie);
+  };
+
+  public getPopularMovies = async (): Promise<object[]> => {
+    const path = `movie/popular?${this.baseParams}&page=1`;
+    const json = await this.getResource(path);
+    return json.results.map(this.transformMovie);
+  };
+
+  public getLatestMovies = async (): Promise<object[]> => {
+    const path = `movie/latest?${this.baseParams}`;
+    const json = await this.getResource(path);
+    return [json].map(this.transformMovie);
+  };
+
+  public getUpcomingMovies = async (): Promise<object[]> => {
+    const path = `movie/upcoming?${this.baseParams}&page=1`;
     const json = await this.getResource(path);
     return json.results.map(this.transformMovie);
   };
