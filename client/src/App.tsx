@@ -6,7 +6,7 @@ import AuthPage from './pages/AuthPage';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
-import { GenresList } from './components/movieDB-lists';
+import { GenresList } from './components/movie_db_components/movieDB-lists';
 import { HomepageComponent } from './pages';
 
 interface MyState {
@@ -75,9 +75,9 @@ export default class App extends Component<any, MyState> {
     //   );
     // }
     return (
-      <div className="App">
+      <div className="app">
         <Header logout={this.logout} />
-        <main className="row">
+        <main>
           <MovieApiServiceProvider value={this.state.movieApiService} >
             <BrowserRouter>
               <Switch>

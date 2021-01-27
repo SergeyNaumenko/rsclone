@@ -4,7 +4,7 @@ import './list.css';
 const ListComponent: React.FunctionComponent<any> = (props: any) => {
   const { data, onItemSelected, children: renderListItem } = props;
 
-  const list = data.map((item: any) => {
+  const list = !data ? '' : data.map((item: any) => {
     const { id } = item;
     const renderedItem = renderListItem(item);
 
@@ -14,7 +14,7 @@ const ListComponent: React.FunctionComponent<any> = (props: any) => {
         onClick={() => onItemSelected(id)}
         role="link"
         tabIndex={id}
-        className="list hoverable teal lighten-5"
+        className="collection-item hoverable row"
       >
         {renderedItem}
       </li>
@@ -22,7 +22,7 @@ const ListComponent: React.FunctionComponent<any> = (props: any) => {
   });
 
   return (
-    <ul>
+    <ul className="collection">
       {list}
     </ul>
   );

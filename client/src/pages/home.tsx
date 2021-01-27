@@ -3,8 +3,11 @@ import { withRouter, Link } from 'react-router-dom';
 import ItemList from '../components/list/list.component';
 import {
   GenresList,
-  TopRatedList,
-} from '../components/movieDB-lists';
+  TopRatedMoviesList,
+  LatestMovie,
+  PopularMoviesList,
+  UpcomingMoviesList,
+} from '../components/movie_db_components/movieDB-lists';
 
 interface pageProps{
   history:any,
@@ -19,25 +22,25 @@ const HomepageComponent = ({ history, match}:pageProps) => {
       id: 0,
       name: 'latest',
       displayName: 'Latest',
-      list: <TopRatedList/>,
+      list: <LatestMovie/>,
     },
     {
       id: 1,
       name: 'popular',
       displayName: 'Popular',
-      list: <GenresList/>,
+      list: <PopularMoviesList/>,
     },
     {
       id: 2,
       name: 'top',
       displayName: 'Top Rated',
-      list: <TopRatedList/>,
+      list: <TopRatedMoviesList/>,
     },
     {
       id: 3,
       name: 'upcoming',
       displayName: 'Upcoming',
-      list: <GenresList/>,
+      list: <UpcomingMoviesList/>,
     }
   ];
 
@@ -48,6 +51,12 @@ const HomepageComponent = ({ history, match}:pageProps) => {
     history.push(id)
   };
 
+  const renderMoviesLinks = ({ displayName, name }:{displayName:string, name:string}) => {
+    return (
+      <Link to={`/list/${name}`}>{ displayName }</Link>
+    )
+  }
+
   return (
     <div className='container'>
       <div className='row'>
@@ -55,9 +64,7 @@ const HomepageComponent = ({ history, match}:pageProps) => {
           <div className="section">
             <h5>Movies</h5>
             <ItemList data={listItems} onItemSelected={onItemSelected}>
-              {
-                ({ displayName, name }:{displayName:string, name:string}) => <Link to={`/list/${name}`}>{ displayName }</Link>
-              }
+              {renderMoviesLinks}
             </ItemList>
             <div className="divider"></div>
             <p><Link to='/genres'>Genres</Link></p>
