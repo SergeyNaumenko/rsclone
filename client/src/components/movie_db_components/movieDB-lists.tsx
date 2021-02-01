@@ -1,8 +1,14 @@
 import React from 'react';
 import ItemList from '../list/list.component';
-import { withData, withMovieService, withChildFunction } from '../hoc';
+import {
+  withData,
+  withMovieService,
+  withChildFunction,
+  withOnclick,
+} from '../hoc';
 import compose from '../../utils/compose';
 import ISO639 from 'iso-639-1';
+import { withRouter } from 'react-router-dom';
 
 import './style.css';
 
@@ -15,7 +21,6 @@ const mapPersonMethodsToProps = (movieApiService: any) => {
 };
 
 const renderMovieListItem = (item: any) => {
-  console.log(item)
   return (
     <div className="col s12">
       <div className="card horizontal movie-list-card">
@@ -86,6 +91,8 @@ const mapUpcomingMoviesMethodToProps = (movieApiService: any) => {
   };
 };
 
+const onItemSelected = (id: number, history: any) => history.push(`../movie/${id}`);
+
 const GenresList = compose(
   withMovieService(mapPersonMethodsToProps),
   withData,
@@ -95,25 +102,33 @@ const GenresList = compose(
 const TopRatedMoviesList = compose(
                       withMovieService(mapTopRatedMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem)
+                      withChildFunction(renderMovieListItem),
+                      withOnclick(onItemSelected),
+                      withRouter,
                     )(ItemList);
 
 const LatestMovie = compose(
                       withMovieService(mapLatestMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem)
+                      withChildFunction(renderMovieListItem),
+                      withOnclick(onItemSelected),
+                      withRouter,
                     )(ItemList);
 
 const PopularMoviesList = compose(
                       withMovieService(mapPopularMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem)
+                      withChildFunction(renderMovieListItem),
+                      withOnclick(onItemSelected),
+                      withRouter,
                     )(ItemList);
 
 const UpcomingMoviesList = compose(
                       withMovieService(mapUpcomingMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem)
+                      withChildFunction(renderMovieListItem),
+                      withOnclick(onItemSelected),
+                      withRouter,
                     )(ItemList);
 
 export {

@@ -53,6 +53,13 @@ export default class MovieApiService {
     return this.discoverMovies(); // ('&with_genres=28')
   };
 
+  public getMovieById = async (id: number): Promise<object[]> => {
+    const path = `movie/find/${id}?${this.baseParams}&external_source=imdb_id`;
+    const json = await this.getResource(path);
+    return [json].map(this.transformMovie);
+  };
+
+
   private discoverMovies = async () => {
     const path = `discover/movie?${this.baseParams}&sort_by=popularity.desc&page=1`;
     const json = await this.getResource(path);
