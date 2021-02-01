@@ -45,7 +45,7 @@ const HomepageComponent = ({ history, match}:pageProps) => {
   const listComponent: React.FC | React.Component = listItem ? listItem.list : null;
   
   const onItemSelected = function(id:number) {
-    history.push(id)
+    history.push(id);
   };
 
   return (

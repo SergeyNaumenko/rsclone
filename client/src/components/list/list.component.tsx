@@ -35,7 +35,7 @@ const ListComponent: React.FunctionComponent<any> = (props: any) => {
   const list = data.map((item: any) => {
     const { id } = item;
     const renderItem = renderListItem(item);
-
+    console.log(onItemSelected);
     return (
       <div
         key={id}

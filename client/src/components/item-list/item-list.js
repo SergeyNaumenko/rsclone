@@ -7,11 +7,11 @@ const ItemList = (props) => {
   const items = !data? '' : data.map((item) => {
     const { id } = item;
     const label = renderLabel(item);
-
+    console.log(onItemSelected);
     return (
       <li
           key={id}
-          onClick={() => onItemSelected(id)}>
+          >
         {label}
       </li>
     );

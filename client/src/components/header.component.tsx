@@ -1,32 +1,44 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import SearchForm from './search/search.componeent';
+import { Link, withRouter } from 'react-router-dom'
+
 
 interface MyProps {
   logout: any;
 }
 
-const Header: React.FC<MyProps> = ({ logout }: MyProps) => {
+const Header:React.FC<any>= ({ logout }: MyProps) => {
+  let instances:any = null;
+
+  useEffect(() => {
+    const elem:any = document.querySelector('.dropdown-trigger');
+    instances = M.Dropdown.init(elem, {});
+  });
+  
+  const handler = () => {
+    instances.open();
+  }
   return (
     <header className="page-header teal">
       <div className="container">
         <nav className="teal z-depth-0">
           <div className="nav-wrapper">
-            <a href="/" className="brand-logo">
+            <Link to="/" className="brand-logo">
               KinoPoisk
-            </a>
+            </Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li>
+              {/* <li>
                 <SearchForm />
-              </li>
+              </li> */}
               <li>
-                <a href="/">
+                <a className='dropdown-trigger btn' href='#' onClick = {handler} data-target='dropdown1'>
                   <i className="material-icons">account_circle</i>
                 </a>
-              </li>
-              <li>
-                <button type="button" onClick={() => logout()}>
-                  logout
-                </button>
+                <ul id='dropdown1' className='dropdown-content'>
+                  <li><Link to='/profile'>Оценки</Link></li>
+                  <li><a href="#!">Фильмы</a></li>
+                  <li><a href="#!" onClick={() => logout()}>Выйти</a></li>
+                </ul>
               </li>
             </ul>
           </div>
