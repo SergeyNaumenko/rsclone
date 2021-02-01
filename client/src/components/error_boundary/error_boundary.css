@@ -1,0 +1,15 @@
+.error-component {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: rgb(220, 253, 245);
+  color: black;
+  padding: 30px;
+}
+
+.error-component .text {
+  margin-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+}
