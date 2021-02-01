@@ -7,7 +7,11 @@ import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
 import { GenresList } from './components/movie_db_components/movieDB-lists';
-import { HomepageComponent, MoviePageComponent } from './pages';
+import {
+  HomepageComponent,
+  MoviePageComponent,
+  ListpageComponent
+} from './pages';
 
 interface MyState {
   movieApiService: any,
@@ -82,7 +86,7 @@ export default class App extends Component<any, MyState> {
             <BrowserRouter>
               <Switch>
                 <Route path="/" exact component={HomepageComponent}/>
-                <Route path="/list/:listName?" exact component={HomepageComponent}/>
+                <Route path="/list/:listName?" exact component={ListpageComponent}/>
                 <Route path="/movie/:id?" exact component={MoviePageComponent}/>
                 <Route path="/genres/:genre?" exact component={GenresList}/>
                 <Route render={() => <h2>Page not found</h2>} />

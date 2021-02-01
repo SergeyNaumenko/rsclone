@@ -14,7 +14,7 @@ import './style.css';
 
 const renderName = ({ name }: { name: string }) => <span>{name}</span>;
 
-const mapPersonMethodsToProps = (movieApiService: any) => {
+const mapGenresMethodsToProps = (movieApiService: any) => {
   return {
     getData: movieApiService.getGenres,
   };
@@ -91,10 +91,10 @@ const mapUpcomingMoviesMethodToProps = (movieApiService: any) => {
   };
 };
 
-const onItemSelected = (id: number, history: any) => history.push(`../movie/${id}`);
+const onItemSelected = (item: any, history: any) => history.push(`../movie/${item.id}`);
 
 const GenresList = compose(
-  withMovieService(mapPersonMethodsToProps),
+  withMovieService(mapGenresMethodsToProps),
   withData,
   withChildFunction(renderName)
 )(ItemList);

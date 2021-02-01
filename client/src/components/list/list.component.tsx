@@ -11,7 +11,7 @@ const ListComponent: React.FunctionComponent<any> = (props: any) => {
     return (
       <li
         key={id}
-        onClick={() => onItemSelected(id, history)}
+        onClick={() => onItemSelected(item, history)}
         role="link"
         tabIndex={id}
         className="collection-item hoverable row"
