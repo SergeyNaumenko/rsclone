@@ -10,7 +10,7 @@ import { GenresList } from './components/movieDB-lists';
 import { HomepageComponent } from './pages';
 
 interface MyState {
-  movieApiService: any,
+  movieApiService: any;
   isAuth: boolean;
   jwtToken: any;
   id: any;
@@ -60,7 +60,7 @@ export default class App extends Component<any, MyState> {
   };
 
   render() {
-    const { isAuth } = this.state;
+    const { isAuth, movieApiService } = this.state;
     console.log(isAuth);
     // if (!isAuth){
     //   return (
@@ -78,19 +78,23 @@ export default class App extends Component<any, MyState> {
       <div className="App">
         <Header logout={this.logout} />
         <main className="row">
-          <MovieApiServiceProvider value={this.state.movieApiService} >
+          <MovieApiServiceProvider value={movieApiService}>
             <BrowserRouter>
               <Switch>
-                <Route path="/" exact component={HomepageComponent}/>
-                <Route path="/list/:listName?" exact component={HomepageComponent}/>
+                <Route path="/" exact component={HomepageComponent} />
+                <Route
+                  path="/list/:listName?"
+                  exact
+                  component={HomepageComponent}
+                />
 
-                <Route path="/genres/:genre?" exact component={GenresList}/>
+                <Route path="/genres/:genre?" exact component={GenresList} />
                 <Route render={() => <h2>Page not found</h2>} />
               </Switch>
             </BrowserRouter>
           </MovieApiServiceProvider>
         </main>
-        <Footer/>
+        <Footer />
       </div>
     );
   }
