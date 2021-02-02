@@ -14,7 +14,7 @@ import {
 } from './pages';
 
 interface MyState {
-  movieApiService: any,
+  movieApiService: any;
   isAuth: boolean;
   jwtToken: any;
   id: any;
@@ -64,7 +64,7 @@ export default class App extends Component<any, MyState> {
   };
 
   render() {
-    const { isAuth } = this.state;
+    const { isAuth, movieApiService } = this.state;
     console.log(isAuth);
     // if (!isAuth){
     //   return (
@@ -94,7 +94,7 @@ export default class App extends Component<any, MyState> {
             </BrowserRouter>
           </MovieApiServiceProvider>
         </main>
-        <Footer/>
+        <Footer />
       </div>
     );
   }
