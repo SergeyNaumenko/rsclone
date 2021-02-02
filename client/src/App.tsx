@@ -6,8 +6,12 @@ import AuthPage from './pages/AuthPage';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
-import { GenresList } from './components/movieDB-lists';
-import { HomepageComponent } from './pages';
+import { GenresList } from './components/movie_db_components/movieDB-lists';
+import {
+  HomepageComponent,
+  MoviePageComponent,
+  ListpageComponent
+} from './pages';
 
 interface MyState {
   movieApiService: any;
@@ -75,20 +79,16 @@ export default class App extends Component<any, MyState> {
     //   );
     // }
     return (
-      <div className="App">
+      <div className="app">
         <Header logout={this.logout} />
-        <main className="row">
-          <MovieApiServiceProvider value={movieApiService}>
+        <main>
+          <MovieApiServiceProvider value={this.state.movieApiService} >
             <BrowserRouter>
               <Switch>
-                <Route path="/" exact component={HomepageComponent} />
-                <Route
-                  path="/list/:listName?"
-                  exact
-                  component={HomepageComponent}
-                />
-
-                <Route path="/genres/:genre?" exact component={GenresList} />
+                <Route path="/" exact component={HomepageComponent}/>
+                <Route path="/list/:listName?" exact component={ListpageComponent}/>
+                <Route path="/movie/:id?" exact component={MoviePageComponent}/>
+                <Route path="/genres/:genre?" exact component={GenresList}/>
                 <Route render={() => <h2>Page not found</h2>} />
               </Switch>
             </BrowserRouter>

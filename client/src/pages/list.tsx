@@ -8,15 +8,11 @@ interface pageProps{
   match: any,
 }
 
-const HomepageComponent = ({ history, match}:pageProps) => {
-  /*const { listName } = match.params;
+const ListpageComponent = ({ history, match}:pageProps) => {
+  const { listName } = match.params;
 
   const listItem: any = listItems.find((item) => item.name === listName);
   const listComponent: React.FC | React.Component = listItem ? listItem.list : null;
-*/
-  const lastMovieListId = 0;
-  const lastMovieObject: any = listItems.find((item) => item.id === lastMovieListId);
-  const lastMovieComponent: React.FC | React.Component = lastMovieObject ? lastMovieObject.list : null;
 
   return (
     <div className='container'>
@@ -24,17 +20,17 @@ const HomepageComponent = ({ history, match}:pageProps) => {
         <div className='col l2 s5'>
           <div className="section">
             <h5>Movies</h5>
-            <ItemList data={listItems} onItemSelected={(item: any)=>{history.push(`./${item.name}`)}}>
+            <ItemList data={listItems} onItemSelected={(id: any)=>{}}>
               {renderMoviesLinks}
             </ItemList>
             <div className="divider"></div>
             <p><Link to='/genres'>Genres</Link></p>
           </div>
         </div>
-        <div className='col l10 s7'>{ lastMovieComponent }</div>
+        <div className='col l10 s7'>{ listComponent }</div>
       </div>
     </div>
   )
 }
 
-export default withRouter(HomepageComponent);
+export default withRouter(ListpageComponent);

@@ -31,8 +31,9 @@ const withData = (View) => {
       });
 
       // eslint-disable-next-line react/destructuring-assignment
+      const id = this.props.id || '';
       this.props
-        .getData()
+        .getData(id)
         .then((data) => {
           this.setState({
             data,
@@ -55,9 +56,9 @@ const withData = (View) => {
         return <p>spinner</p>;
       }
 
-      if (error) {
+      /*if (error) {
         return <p>error</p>;
-      }
+      }*/
 
       return <View {...this.props} data={data} />;
     }

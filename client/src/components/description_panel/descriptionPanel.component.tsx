@@ -2,7 +2,7 @@ import React from 'react';
 import ISO639 from 'iso-639-1';
 import './descriptionPanel.css';
 
-interface DescriptionData {
+type DescriptionData = {
   posterPath: string;
   title: string;
   releaseDate: string;
@@ -15,9 +15,11 @@ interface DescriptionData {
   overview: string;
 }
 
-const DescriptionPanel: React.FunctionComponent<DescriptionData> = (
-  props: DescriptionData
-) => {
+type ComponentProps = {
+  data: DescriptionData,
+}
+
+const DescriptionPanel: React.FC<any> = (props: ComponentProps) => {
   const {
     posterPath,
     title,
@@ -29,7 +31,7 @@ const DescriptionPanel: React.FunctionComponent<DescriptionData> = (
     voteAverage,
     adult,
     overview,
-  } = props;
+  } = props.data;
 
   // const addGenres = (arr: object[]) => {
   //   arr.reduce((result, item) => {
