@@ -1,23 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import ServerApi from '../services/serverApi';
+import withUser from '../components/hoc/withUser';
 
 
-interface MyProps {
-  login: any;
-}
-interface MyState{
-  login:string,
-  password:string
-}
-export default class AuthPage extends React.Component <MyProps,MyState>{
+class AuthPage extends React.Component <any,any>{
+    
     state = {
         login:'',
         password:'',
-        serverApi: new ServerApi()
+        serverApi: this.props.prop.serverApi
     }
-    baseUrl:string = 'http://localhost:5000';
 
     regHandler = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>,url:string) => {
         try {
@@ -25,9 +18,10 @@ export default class AuthPage extends React.Component <MyProps,MyState>{
           const { serverApi, login ,password } = this.state;
           const data = await serverApi.registerAndLogin(url, login, password);
           console.log(data);
+          M.toast({html: data.message})
           return data;
         } catch (error) {
-          console.log(error);
+          M.toast({html: error})
         }
     }
 
@@ -36,10 +30,14 @@ export default class AuthPage extends React.Component <MyProps,MyState>{
         e.preventDefault();
         const { serverApi, login ,password } = this.state;
         const data = await serverApi.registerAndLogin(url, login, password);
-        if(!!data.token) this.props.login(data.token, data.userId);
+        if(!!data.token){
+          this.props.prop.login(data.token, data.userId)
+        }else{
+          M.toast({html: data.message})
+        };
         return data;
       } catch (error) {
-        console.log(error);
+        M.toast({html: error})
       }
   }
     render(){
@@ -78,18 +76,17 @@ export default class AuthPage extends React.Component <MyProps,MyState>{
                 <button
                   className="btn deep-purple accent-1"
                   style={{marginRight: 10}}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.loginHandler(e,`/api/auth/login`)}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.loginHandler(e,`/api/login`)}
                 >
                   Войти
                 </button>
                 <button
                   className="btn grey lighten-1 black-text"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.regHandler(e,`/api/auth/reg`)}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.regHandler(e,`/api/reg`)}
                 >
                   Регистрация
                 </button>
               </div>
-
             </div>
           </div>
         </div>
@@ -97,3 +94,5 @@ export default class AuthPage extends React.Component <MyProps,MyState>{
     );
   }
 }
+
+export default withUser(AuthPage);

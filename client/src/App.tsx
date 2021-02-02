@@ -3,17 +3,20 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/header.component';
 import Footer from './components/footer.component';
 import AuthPage from './pages/AuthPage';
+import { UserContextProvider } from './context/login-context';
 import ProfilePage from './pages/ProfilePage';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
 import { GenresList } from './components/movieDB-lists';
 import { HomepageComponent } from './pages';
+import ServerApi from './services/serverApi'
 import 'materialize-css/dist/js/materialize.min.js';
 import 'materialize-css/dist/css/materialize.min.css';
 
 interface MyState {
   movieApiService: any;
+  serverApi:any,
   isAuth: boolean;
   jwtToken: any;
   id: any;
@@ -23,6 +26,7 @@ export default class App extends Component<any, MyState> {
     super(props);
     this.state = {
       movieApiService: new MovieApiService(),
+      serverApi : new ServerApi(),
       isAuth: false,
       jwtToken: null,
       id: null,
@@ -63,26 +67,30 @@ export default class App extends Component<any, MyState> {
   };
 
   render() {
-    const { isAuth,id } = this.state;
+    const { isAuth,id,jwtToken } = this.state;
     console.log(isAuth);
     if (!isAuth){
       return (
         <BrowserRouter>
+        <UserContextProvider value={{jwtToken,id,isAuth,login:this.login,logout:this.logout,serverApi:this.state.serverApi}}>
           <Switch>
             <Route path="/" exact>
-              <AuthPage login={this.login} />
+              <AuthPage />
             </Route>
             <Redirect to="/" />
           </Switch>
+          </UserContextProvider>
         </BrowserRouter>
       );
     }
     return (
       <BrowserRouter>
+        <UserContextProvider value={{jwtToken,id,isAuth,login:this.login,logout:this.logout,serverApi:this.state.serverApi}} >
         <div className="App">
-          <Header logout={this.logout} />
+          <Header  />
           <main className="row">
             <MovieApiServiceProvider value={this.state.movieApiService} >
+              
                 <Switch>
                   <Route path="/" exact component={HomepageComponent}/>
                   <Route path="/list/:listName?" exact component={HomepageComponent}/>
@@ -92,10 +100,12 @@ export default class App extends Component<any, MyState> {
                   <Route path="/genres/:genre?" exact component={GenresList}/>
                   <Route render={() => <h2>Page not found</h2>} />
                 </Switch>
+              
             </MovieApiServiceProvider>
           </main>
           <Footer/>
         </div>
+        </UserContextProvider>
       </BrowserRouter>
     );
   }

@@ -1,23 +1,21 @@
 import React,{ useEffect } from 'react';
 import SearchForm from './search/search.componeent';
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom';
+import withUser  from './hoc/withUser';
 
 
-interface MyProps {
-  logout: any;
-}
-
-const Header:React.FC<any>= ({ logout }: MyProps) => {
+const Header:React.FC<any>= ({prop}:any) => {
   let instances:any = null;
-
   useEffect(() => {
     const elem:any = document.querySelector('.dropdown-trigger');
+    console.log(prop);
     instances = M.Dropdown.init(elem, {});
   });
   
   const handler = () => {
     instances.open();
   }
+  const {logout} = prop;
   return (
     <header className="page-header teal">
       <div className="container">
@@ -35,8 +33,9 @@ const Header:React.FC<any>= ({ logout }: MyProps) => {
                   <i className="material-icons">account_circle</i>
                 </a>
                 <ul id='dropdown1' className='dropdown-content'>
-                  <li><Link to='/profile'>Оценки</Link></li>
-                  <li><a href="#!">Фильмы</a></li>
+                  <li><Link to='/profile'>Профиль</Link></li>
+                  <li><a href="#!">Оценки</a></li>
+                  <li><a href="#!">Мои фильмы</a></li>
                   <li><a href="#!" onClick={() => logout()}>Выйти</a></li>
                 </ul>
               </li>
@@ -48,4 +47,4 @@ const Header:React.FC<any>= ({ logout }: MyProps) => {
   );
 };
 
-export default Header;
+export default withUser(Header);

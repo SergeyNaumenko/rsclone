@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import {check, validationResult} from 'express-validator';
 import User from '../models/User';
 import secret from '../config';
+import auth from '../middleware/auth.middle';
 const router = Router();
 
 
@@ -61,6 +62,13 @@ router.get('/data', (req:Request, res:Response) => {
     .then((data) => {
         res.json(data);
     })
+})
+
+router.post('/watchlist', auth, async(req:any, res:Response) => {
+    console.log(req.user);
+    const user:any = await User.findById(req.user.id)
+    console.log(user.login);
+    res.json({ login:user.login});
 })
 
 module.exports = router;
