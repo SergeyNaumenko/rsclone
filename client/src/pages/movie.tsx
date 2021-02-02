@@ -1,9 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { MovieDetails } from '../components/movie_db_components/movieDB-movie-details';
 
-const MoviePageComponent = () => {
+interface pageProps{
+  match: any,
+}
+
+const MoviePageComponent = ({ match }:pageProps) => {
+
+  const { id } = match.params;
+
   return (
-    <div>movie</div>
+    <MovieDetails id={id}/>
   )
 }
 

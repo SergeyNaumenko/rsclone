@@ -3,7 +3,7 @@ export default class MovieApiService {
 
   private baseUrl = 'https://api.themoviedb.org/3/';
 
-  private baseParams = `api_key=${this.apiKey}&page=1&language=en-US`;
+  private baseParams = `api_key=${this.apiKey}&language=en-US`;
 
   private getResource = async (path: string) => {
     const url = `${this.baseUrl}${path}`;
@@ -53,10 +53,10 @@ export default class MovieApiService {
     return this.discoverMovies(); // ('&with_genres=28')
   };
 
-  public getMovieById = async (id: number): Promise<object[]> => {
-    const path = `movie/find/${id}?${this.baseParams}&external_source=imdb_id`;
+  public getMovieById = async (id: number): Promise<object> => {
+    const path = `movie/${id}?${this.baseParams}&external_source=imdb_id`;
     const json = await this.getResource(path);
-    return [json].map(this.transformMovie);
+    return this.transformMovie(json);
   };
 
 
