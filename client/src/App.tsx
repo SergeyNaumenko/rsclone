@@ -8,9 +8,12 @@ import ProfilePage from './pages/ProfilePage';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
-import { GenresList } from './components/movieDB-lists';
-import { HomepageComponent } from './pages';
-import ServerApi from './services/serverApi'
+import { GenresList } from './components/movie_db_components/movieDB-lists';
+import {
+  HomepageComponent,
+  MoviePageComponent,
+  ListpageComponent
+} from './pages';
 import 'materialize-css/dist/js/materialize.min.js';
 import 'materialize-css/dist/css/materialize.min.css';
 
@@ -92,11 +95,12 @@ export default class App extends Component<any, MyState> {
             <MovieApiServiceProvider value={this.state.movieApiService} >
               
                 <Switch>
-                  <Route path="/" exact component={HomepageComponent}/>
-                  <Route path="/list/:listName?" exact component={HomepageComponent}/>
                   <Route path="/profile" exact>
                     <ProfilePage />
                   </Route>
+                  <Route path="/" exact component={HomepageComponent}/>
+                  <Route path="/list/:listName?" exact component={ListpageComponent}/>
+                  <Route path="/movie/:id?" exact component={MoviePageComponent}/>
                   <Route path="/genres/:genre?" exact component={GenresList}/>
                   <Route render={() => <h2>Page not found</h2>} />
                 </Switch>

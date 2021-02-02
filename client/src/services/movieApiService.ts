@@ -3,7 +3,7 @@ export default class MovieApiService {
 
   private baseUrl = 'https://api.themoviedb.org/3/';
 
-  private baseParams = `api_key=${this.apiKey}&page=1&language=en-US`;
+  private baseParams = `api_key=${this.apiKey}&language=en-US`;
 
   private getResource = async (path: string) => {
     const url = `${this.baseUrl}${path}`;
@@ -19,14 +19,32 @@ export default class MovieApiService {
     return json;
   };
 
-  public getGenres = async (type = 'movie'): Promise<any> => {
+  public getGenres = async (type = 'movie'): Promise<object[]> => {
     const path = `genre/${type}/list?${this.baseParams}`;
     const json = await this.getResource(path);
     return json.genres;
   };
 
-  public getTopRatedMovies = async (): Promise<string[]> => {
+  public getTopRatedMovies = async (): Promise<object[]> => {
     const path = `movie/top_rated?${this.baseParams}&page=1`;
+    const json = await this.getResource(path);
+    return json.results.map(this.transformMovie);
+  };
+
+  public getPopularMovies = async (): Promise<object[]> => {
+    const path = `movie/popular?${this.baseParams}&page=1`;
+    const json = await this.getResource(path);
+    return json.results.map(this.transformMovie);
+  };
+
+  public getLatestMovies = async (): Promise<object[]> => {
+    const path = `movie/latest?${this.baseParams}`;
+    const json = await this.getResource(path);
+    return [json].map(this.transformMovie);
+  };
+
+  public getUpcomingMovies = async (): Promise<object[]> => {
+    const path = `movie/upcoming?${this.baseParams}&page=1`;
     const json = await this.getResource(path);
     return json.results.map(this.transformMovie);
   };
@@ -34,6 +52,13 @@ export default class MovieApiService {
   public getByGenres = async (): Promise<string> => {
     return this.discoverMovies(); // ('&with_genres=28')
   };
+
+  public getMovieById = async (id: number): Promise<object> => {
+    const path = `movie/${id}?${this.baseParams}&external_source=imdb_id`;
+    const json = await this.getResource(path);
+    return this.transformMovie(json);
+  };
+
 
   private discoverMovies = async () => {
     const path = `discover/movie?${this.baseParams}&sort_by=popularity.desc&page=1`;
