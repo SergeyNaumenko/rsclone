@@ -4,6 +4,7 @@ import ListpageComponent from './list';
 import ProfilePage from './ProfilePage';
 import Watchlist from './Watchlist';
 import RatingPage from './RatingPage'
+import GenresPage from './genres';
 
 export {
   HomepageComponent,
@@ -11,5 +12,6 @@ export {
   ListpageComponent,
   ProfilePage,
   Watchlist,
-  RatingPage
+  RatingPage,
+  GenresPage,
 };

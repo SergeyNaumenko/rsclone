@@ -8,14 +8,14 @@ import { UserContextProvider } from './context/login-context';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
-import { GenresList } from './components/movie_db_components/movieDB-lists';
 import {
   HomepageComponent,
   MoviePageComponent,
   ListpageComponent,
   ProfilePage,
   Watchlist,
-  RatingPage
+  RatingPage,
+  GenresPage,
 } from './pages';
 import ServerApi from './services/serverApi';
 import 'materialize-css/dist/js/materialize.min.js';
@@ -95,10 +95,10 @@ export default class App extends Component<any, MyState> {
       <BrowserRouter>
         <UserContextProvider value={{jwtToken,id,isAuth,login:this.login,logout:this.logout,serverApi:this.state.serverApi}} >
         <div className="App">
-          <Header  />
-          <main className="row">
+          <Header/>
+          <main>
             <MovieApiServiceProvider value={this.state.movieApiService} >
-              
+
                 <Switch>
                   <Route path="/profile" exact>
                     <ProfilePage />
@@ -112,10 +112,10 @@ export default class App extends Component<any, MyState> {
                   <Route path="/" exact component={HomepageComponent}/>
                   <Route path="/list/:listName?" exact component={ListpageComponent}/>
                   <Route path="/movie/:id?" exact component={MoviePageComponent}/>
-                  <Route path="/genres/:genre?" exact component={GenresList}/>
-                  <Route render={() => <h2>Page not found</h2>} />
+                  <Route path="/genres/:id?" exact component={GenresPage}/>
+                  <Route render={() => <h4>Page not found</h4>} />
                 </Switch>
-              
+
             </MovieApiServiceProvider>
           </main>
           <Footer/>
