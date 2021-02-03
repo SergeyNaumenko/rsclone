@@ -1,0 +1,24 @@
+.description-panel {
+}
+
+.description-panel .poster {
+  height: 500px;
+  width: 300px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.info {
+  font-size: 1.3rem;
+}
+
+.info .category {
+  margin-right: 0.6rem;
+  color: #424242;
+  font-weight: 700;
+}
+
+.info .description {
+  color: #616161;
+}

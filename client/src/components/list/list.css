@@ -1,0 +1,17 @@
+.list {
+  font-size: 1rem;
+  color: #616161;
+}
+
+.item_wrapper .item-poster {
+  height: 100px;
+  width: 60px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.item-description .item-title {
+  color: #424242;
+  font-weight: 700;
+}

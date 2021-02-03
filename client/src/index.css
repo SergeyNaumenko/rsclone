@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.footer-logo {
+  width: 3rem;
+}
+
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
