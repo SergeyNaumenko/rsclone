@@ -1,5 +1,8 @@
 import React from 'react';
 import withUser from '../components/hoc/withUser';
+import ItemList from '../components/list/list.component';
+import Spinner from '../components/spinner/spinner';
+import { Link } from 'react-router-dom';
 
 
 interface MyProps {
@@ -9,24 +12,74 @@ interface MyState{
 }
 
 class RatingPage extends React.Component<any,any>{
-    state = {
-        name: null,
-        serverApi: this.props.prop.serverApi
-    }
-    handler = async() => {
-        const { serverApi} = this.state;
-        const data = await serverApi.getRatingList(this.props.prop.jwtToken);
-        return data;
-    }
-    render(){
-        return (
-            <div className="container">
-                <button onClick={() => this.handler()}>fetch</button>
-                <div className="row">
-                </div>
+  state = {
+    name: null,
+    serverApi: this.props.prop.serverApi,
+    data: null,
+    loading: true,
+    error: false,
+}
+handler = async() => {
+    const { serverApi} = this.state;
+    const data = await serverApi.getRatingList(this.props.prop.jwtToken);
+    console.log(data)
+    return data;
+}
+
+componentDidMount() {
+  this.update();
+}
+
+update() {
+  this.setState({
+    loading: true,
+    error: false,
+  });
+
+  this.handler()
+    .then((obj) => {
+      this.setState({
+        data: obj.data,
+        loading: false,
+      });
+    })
+}
+
+renderMovieList() {
+  return (item: any) => {
+    return (
+    <div className="col s12">
+      <div className="card horizontal movie-list-card">
+        <div className="card-image">
+          <img src={item.posterPath}/>
+        </div>
+        <div className="card-stacked">
+          <div className="card-content">
+            <h5 className="header">{item.title}</h5>
+            <span className="item-rating">Your Vote is {parseInt(item.ourVote)}</span>
+          </div>
+          <div className="card-action">
+            <Link to={`/movie/${item.id}`}>Details</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+    )}
+}
+
+render() {
+    const { data } = this.state;
+    const itemList = <ItemList data={data} onItemSelected={()=>{}}>{this.renderMovieList()}</ItemList>
+    const component = !this.state.data ? <Spinner/> : itemList;
+
+    return (
+        <div className="container">
+            <div className="row">
+              { component }
             </div>
-        )
-    }
+        </div>
+    )
+}
 }
 
 export default withUser(RatingPage);
