@@ -11,8 +11,9 @@ import { Link, withRouter } from 'react-router-dom';
 import './style.css';
 import { UserContextConsumer } from '../../context/login-context';
 
-const renderName = ({ name }: { name: string }) => <span>{name}</span>;
-
+const renderName = ({ name, id }: { name: string, id:number }) => {
+  return <Link to={`/genres/${id}`}>{ name }</Link>
+}
 const mapGenresMethodsToProps = (movieApiService: any) => {
   return {
     getData: movieApiService.getGenres,
@@ -24,7 +25,6 @@ const RenderMovieListItem = (item: any,prop:any) => {
   const handlerWatchlist = async(item:any,val:any) => {
     try {
       const {jwtToken,serverApi} = val;
-      console.log(jwtToken,serverApi);
       const res = await serverApi.addWatchList(item,jwtToken);
       M.toast({html: res.mes})
     } catch (error) {
@@ -88,13 +88,29 @@ const mapUpcomingMoviesMethodToProps = (movieApiService: any) => {
   };
 };
 
+const mapMoviesByGenresMethodToProps = (movieApiService: any) => {
+  return {
+    getData: movieApiService.getByGenres
+  };
+};
+
 const onItemSelected = (item: any, history: any) => history.push(`../movie/${item.id}`);
 
 const GenresList = compose(
-  withMovieService(mapGenresMethodsToProps),
-  withData,
-  withChildFunction(renderName)
-)(ItemList);
+                    withMovieService(mapGenresMethodsToProps),
+                    withData,
+                    withChildFunction(renderName),
+                    withOnclick(() => {}),
+                    withRouter,
+                  )(ItemList);
+
+const MovieByGenreList = compose(
+                          withMovieService(mapMoviesByGenresMethodToProps),
+                          withData,
+                          withChildFunction(RenderMovieListItem),
+                          withOnclick(onItemSelected),
+                          withRouter,
+                        )(ItemList);
 
 const TopRatedMoviesList = compose(
                       withMovieService(mapTopRatedMoviesMethodToProps),
@@ -134,4 +150,5 @@ export {
   LatestMovie,
   PopularMoviesList,
   UpcomingMoviesList,
+  MovieByGenreList,
 };

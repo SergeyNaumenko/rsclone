@@ -19,8 +19,8 @@ export default class MovieApiService {
     return json;
   };
 
-  public getGenres = async (type = 'movie'): Promise<object[]> => {
-    const path = `genre/${type}/list?${this.baseParams}`;
+  public getGenres = async (): Promise<object[]> => {
+    const path = `genre/movie/list?${this.baseParams}`;
     const json = await this.getResource(path);
     return json.genres;
   };
@@ -49,8 +49,8 @@ export default class MovieApiService {
     return json.results.map(this.transformMovie);
   };
 
-  public getByGenres = async (): Promise<string> => {
-    return this.discoverMovies(); // ('&with_genres=28')
+  public getByGenres = async (id: number): Promise<string> => {
+    return this.discoverMovies(id);
   };
 
   public getMovieById = async (id: number): Promise<object> => {
@@ -60,8 +60,8 @@ export default class MovieApiService {
   };
 
 
-  private discoverMovies = async () => {
-    const path = `discover/movie?${this.baseParams}&sort_by=popularity.desc&page=1`;
+  private discoverMovies = async (id: number) => {
+    const path = `discover/movie?${this.baseParams}&sort_by=popularity.desc&page=1&with_genres=${id}`;
     const json = await this.getResource(path);
     return json.results.map(this.transformMovie);
   };

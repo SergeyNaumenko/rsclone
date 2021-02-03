@@ -21,7 +21,9 @@ const withData = (View) => {
     componentDidUpdate(prevProps) {
       // eslint-disable-next-line react/prop-types
       // eslint-disable-next-line react/destructuring-assignment
-      if (this.props.getData !== prevProps.getData) {
+      const {id , getData} = this.props;
+      const {id: prevId , getData: prevGetData} = prevProps;
+      if (getData !== prevGetData || id !== prevId) {
         this.update();
       }
     }
