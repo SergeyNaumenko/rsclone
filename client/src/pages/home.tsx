@@ -21,7 +21,7 @@ const HomepageComponent = ({ history, match}:pageProps) => {
   return (
     <div className='container'>
       <div className='row'>
-        <div className='col l2 s5'>
+        <div className='col l2'>
           <div className="section">
             <h5>Movies</h5>
             <ItemList data={listItems} onItemSelected={(item: any)=>{history.push(`./${item.name}`)}}>
@@ -31,7 +31,7 @@ const HomepageComponent = ({ history, match}:pageProps) => {
             <p><Link to='/genres'>Genres</Link></p>
           </div>
         </div>
-        <div className='col l10 s7'>{ lastMovieComponent }</div>
+        <div className='col l10'>{ lastMovieComponent }</div>
       </div>
     </div>
   )

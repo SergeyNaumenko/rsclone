@@ -95,10 +95,10 @@ export default class App extends Component<any, MyState> {
       <BrowserRouter>
         <UserContextProvider value={{jwtToken,id,isAuth,login:this.login,logout:this.logout,serverApi:this.state.serverApi}} >
         <div className="App">
-          <Header  />
-          <main className="row">
+          <Header/>
+          <main>
             <MovieApiServiceProvider value={this.state.movieApiService} >
-              
+
                 <Switch>
                   <Route path="/profile" exact>
                     <ProfilePage />
@@ -113,9 +113,9 @@ export default class App extends Component<any, MyState> {
                   <Route path="/list/:listName?" exact component={ListpageComponent}/>
                   <Route path="/movie/:id?" exact component={MoviePageComponent}/>
                   <Route path="/genres/:genre?" exact component={GenresList}/>
-                  <Route render={() => <h2>Page not found</h2>} />
+                  <Route render={() => <h4>Page not found</h4>} />
                 </Switch>
-              
+
             </MovieApiServiceProvider>
           </main>
           <Footer/>

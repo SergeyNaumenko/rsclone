@@ -1,4 +1,4 @@
-import React,{ useEffect,useState}  from 'react';
+import React from 'react';
 import ItemList from '../list/list.component';
 import {
   withData,
@@ -7,11 +7,7 @@ import {
   withOnclick,
 } from '../hoc';
 import compose from '../../utils/compose';
-import noUiSlider from 'nouislider';
-import ISO639 from 'iso-639-1';
-import { withRouter } from 'react-router-dom';
-import ServerApi from '../../services/serverApi';
-import { MovieApiServiceConsumer } from '../../components/movie_service_context';
+import { Link, withRouter } from 'react-router-dom';
 import './style.css';
 import { UserContextConsumer } from '../../context/login-context';
 
@@ -24,7 +20,7 @@ const mapGenresMethodsToProps = (movieApiService: any) => {
 };
 
 const RenderMovieListItem = (item: any,prop:any) => {
-  
+
   const handlerWatchlist = async(item:any,val:any) => {
     try {
       const {jwtToken,serverApi} = val;
@@ -34,8 +30,8 @@ const RenderMovieListItem = (item: any,prop:any) => {
     } catch (error) {
       M.toast({html: error});
     }
-  } 
-  
+  }
+
   return (
     <UserContextConsumer>
     {value =>
@@ -54,39 +50,17 @@ const RenderMovieListItem = (item: any,prop:any) => {
             <span className="item-rating">{item.voteAverage}</span>
           </div>
           <div className="card-action">
-            <a href="#">This is a link</a>
+            <Link to={`/movie/${item.id}`}>Details</Link>
           </div>
           <a className="btn-floating btn-large waves-effect waves-light red" onClick={(e) => {
             e.stopPropagation();
             handlerWatchlist(item,value)
           }}><i className="material-icons">add</i></a>
-          
+
         </div>
       </div>
     </div>}
     </UserContextConsumer>
-    /*<div className="item-wrapper valign-wrapper row">
-      <div
-        className="item-poster col s2"
-        style={{ backgroundImage: `url(${item.posterPath})` }}
-      />
-      <div className="item-description col s4 offset-s4">
-        <span className="item_title">{item.title}</span>
-        <span className="item_genre">{item.genreIds}</span>
-        <span className="item_release_date">{item.releaseDate}</span>
-        <span className="item_language">
-          {ISO639.getName(item.originalLanguage)}
-        </span>
-        <span />
-      </div>
-      <div className="item-additional-info col s2">
-        <span>
-          <i className="material-icons">grade</i>
-        </span>
-        <span className="item-rating">{item.voteAverage}</span>
-        <div className="item-adult">{item.adult ? '+18' : ''}</div>
-      </div>
-    </div>*/
   );
 };
 

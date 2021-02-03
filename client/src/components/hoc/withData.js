@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
+import Spinner from '../spinner/spinner.tsx';
+import ErrorBoundary from '../error_boundary';
 
 const withData = (View) => {
   return class extends Component {
@@ -53,12 +55,20 @@ const withData = (View) => {
       const { data, loading, error } = this.state;
 
       if (loading) {
-        return <p>spinner</p>;
+        return (
+          <div className="col s10">
+            <Spinner/>;
+          </div>
+        )
       }
 
-      /*if (error) {
-        return <p>error</p>;
-      }*/
+      if (error) {
+        return (
+          <div className="col s10">
+            <ErrorBoundary/>
+          </div>
+        )
+      }
 
       return <View {...this.props} data={data} />;
     }
