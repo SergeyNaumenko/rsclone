@@ -4,7 +4,7 @@ import Header from './components/header.component';
 import Footer from './components/footer.component';
 import AuthPage from './pages/AuthPage';
 import { UserContextProvider } from './context/login-context';
-import ProfilePage from './pages/ProfilePage';
+//import ProfilePage from './pages/ProfilePage';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
@@ -12,10 +12,15 @@ import { GenresList } from './components/movie_db_components/movieDB-lists';
 import {
   HomepageComponent,
   MoviePageComponent,
-  ListpageComponent
+  ListpageComponent,
+  ProfilePage,
+  Watchlist,
+  RatingPage
 } from './pages';
+import ServerApi from './services/serverApi';
 import 'materialize-css/dist/js/materialize.min.js';
 import 'materialize-css/dist/css/materialize.min.css';
+
 
 interface MyState {
   movieApiService: any;
@@ -97,6 +102,12 @@ export default class App extends Component<any, MyState> {
                 <Switch>
                   <Route path="/profile" exact>
                     <ProfilePage />
+                  </Route>
+                  <Route path="/watchlist" exact>
+                    <Watchlist />
+                  </Route>
+                  <Route path="/rating" exact>
+                    <RatingPage />
                   </Route>
                   <Route path="/" exact component={HomepageComponent}/>
                   <Route path="/list/:listName?" exact component={ListpageComponent}/>

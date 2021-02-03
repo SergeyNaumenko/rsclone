@@ -13,6 +13,7 @@
     "@types/react-router-dom": "^5.1.7",
     "iso-639-1": "^2.1.5",
     "materialize-css": "^1.0.0-rc.2",
+    "nouislider": "^14.6.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@types/materialize-css": "^1.0.8",
+    "@types/nouislider": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "eslint": "^6.6.0",

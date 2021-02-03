@@ -33,10 +33,10 @@ const Header:React.FC<any>= ({prop}:any) => {
                   <i className="material-icons">account_circle</i>
                 </a>
                 <ul id='dropdown1' className='dropdown-content'>
-                  <li><Link to='/profile'>Профиль</Link></li>
-                  <li><a href="#!">Оценки</a></li>
-                  <li><a href="#!">Мои фильмы</a></li>
-                  <li><a href="#!" onClick={() => logout()}>Выйти</a></li>
+                  <li><Link to='/profile'>Your Profile</Link></li>
+                  <li><Link to="./rating">Your Ratings</Link></li>
+                  <li><Link to="/watchlist">Watchlist</Link></li>
+                  <li><a href="#!" onClick={() => logout()}>Logout</a></li>
                 </ul>
               </li>
             </ul>

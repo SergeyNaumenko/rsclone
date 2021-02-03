@@ -7,7 +7,6 @@ const withUser = (Wrapped: any) => {
     return (
       <UserContextConsumer>
         {(prop:any) => {
-            console.log(prop);
           return <Wrapped {...props} prop = {prop} />;
         }}
       </UserContextConsumer>

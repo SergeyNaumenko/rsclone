@@ -25,21 +25,86 @@ class ServerApi {
             M.toast({html: error})
         }
     }
-    public addWatchList = async (path: string,jwt:string = '') => {
+    public addWatchList = async (item:any,jwt:string = '') => {
         try {
-            const url: string = `${this.baseUrl}${path}`;
+            const url: string = `${this.baseUrl}/api/watchlistadd`;
             const response = await fetch(url,{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${jwt}`
                     },
-                    body: JSON.stringify({})
+                    body: JSON.stringify({item})
                 });
             const json = await response.json();
             return json;
        } catch (error) {
             M.toast({html: error})
+       }
+    }
+    public addVote = async (item:any,jwt:string = '') => {
+        try {
+            const url: string = `${this.baseUrl}/api/voteadd`;
+            const response = await fetch(url,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${jwt}`
+                    },
+                    body: JSON.stringify({item})
+                });
+            const json = await response.json();
+            return json;
+       } catch (error) {
+            M.toast({html: error})
+       }
+    }
+    public getWatchList = async (jwt:string = '') => {
+        try {
+            const url: string = `${this.baseUrl}/api/watchlist`;
+            const response = await fetch(url,{
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${jwt}`
+                    }
+                });
+            const json = await response.json();
+            return json;
+       } catch (error) {
+            M.toast({html: error})
+       }
+    }
+    public getRatingList = async (jwt:string = '') => {
+        try {
+            const url: string = `${this.baseUrl}/api/ratinglist`;
+            const response = await fetch(url,{
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${jwt}`
+                    }
+                });
+            const json = await response.json();
+            return json;
+       } catch (error) {
+            M.toast({html: error})
+       }
+    }
+    public getVoteByFilm = async (jwt:string = '',filmId:any) => {
+        try {
+            const url: string = `${this.baseUrl}/api/getvote:${filmId}`;
+            console.log(url);
+            const response = await fetch(url,{
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${jwt}`
+                    }
+                });
+            const json = await response.json();
+            return json;
+       } catch (error) {
        }
     }
 }
