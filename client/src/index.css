@@ -17,7 +17,7 @@ code {
 }
 
 
-.app {
+.App {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -26,3 +26,4 @@ code {
 main {
   flex-grow: 1;
 }
+

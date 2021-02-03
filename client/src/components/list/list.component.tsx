@@ -1,13 +1,14 @@
-import React from 'react';
+import React,{useState} from 'react';
+import withUser from '../hoc/withUser';
+import Spinner from '../spinner/spinner';
 import './list.css';
 
 const ListComponent: React.FunctionComponent<any> = (props: any) => {
-  const { data, onItemSelected, children: renderListItem, history } = props;
-
+  const { data, onItemSelected, children: renderListItem, history,prop} = props;
+  
   const list = !data ? '' : data.map((item: any) => {
     const { id } = item;
-    const renderedItem = renderListItem(item);
-
+    const renderedItem = renderListItem(item,prop);
     return (
       <li
         key={id}
@@ -20,7 +21,6 @@ const ListComponent: React.FunctionComponent<any> = (props: any) => {
       </li>
     );
   });
-
   return (
     <ul className="collection">
       {list}
@@ -28,4 +28,4 @@ const ListComponent: React.FunctionComponent<any> = (props: any) => {
   );
 };
 
-export default ListComponent;
+export default withUser(ListComponent);

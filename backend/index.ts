@@ -9,7 +9,7 @@ const PORT:number|string = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/api/auth', require('./routes/auth.router'));
+app.use('/api', require('./routes/auth.router'));
 
 
 async function start() {

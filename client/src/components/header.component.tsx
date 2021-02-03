@@ -1,32 +1,43 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import SearchForm from './search/search.componeent';
+import { Link, withRouter } from 'react-router-dom';
+import withUser  from './hoc/withUser';
 
-interface MyProps {
-  logout: any;
-}
 
-const Header: React.FC<MyProps> = ({ logout }: MyProps) => {
+const Header:React.FC<any>= ({prop}:any) => {
+  let instances:any = null;
+  useEffect(() => {
+    const elem:any = document.querySelector('.dropdown-trigger');
+    console.log(prop);
+    instances = M.Dropdown.init(elem, {});
+  });
+  
+  const handler = () => {
+    instances.open();
+  }
+  const {logout} = prop;
   return (
     <header className="page-header teal">
       <div className="container">
         <nav className="teal z-depth-0">
           <div className="nav-wrapper">
-            <a href="/" className="brand-logo">
+            <Link to="/" className="brand-logo">
               KinoPoisk
-            </a>
+            </Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li>
+              {/* <li>
                 <SearchForm />
-              </li>
+              </li> */}
               <li>
-                <a href="/">
+                <a className='dropdown-trigger btn' href='#' onClick = {handler} data-target='dropdown1'>
                   <i className="material-icons">account_circle</i>
                 </a>
-              </li>
-              <li>
-                <button type="button" onClick={() => logout()}>
-                  logout
-                </button>
+                <ul id='dropdown1' className='dropdown-content'>
+                  <li><Link to='/profile'>Your Profile</Link></li>
+                  <li><Link to="./rating">Your Ratings</Link></li>
+                  <li><Link to="/watchlist">Watchlist</Link></li>
+                  <li><a href="#!" onClick={() => logout()}>Logout</a></li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -36,4 +47,4 @@ const Header: React.FC<MyProps> = ({ logout }: MyProps) => {
   );
 };
 
-export default Header;
+export default withUser(Header);

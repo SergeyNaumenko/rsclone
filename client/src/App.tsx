@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/header.component';
 import Footer from './components/footer.component';
 import AuthPage from './pages/AuthPage';
+import { UserContextProvider } from './context/login-context';
+//import ProfilePage from './pages/ProfilePage';
 import config from './config';
 import MovieApiService from './services/movieApiService';
 import { MovieApiServiceProvider } from './components/movie_service_context';
@@ -10,11 +12,19 @@ import { GenresList } from './components/movie_db_components/movieDB-lists';
 import {
   HomepageComponent,
   MoviePageComponent,
-  ListpageComponent
+  ListpageComponent,
+  ProfilePage,
+  Watchlist,
+  RatingPage
 } from './pages';
+import ServerApi from './services/serverApi';
+import 'materialize-css/dist/js/materialize.min.js';
+import 'materialize-css/dist/css/materialize.min.css';
+
 
 interface MyState {
   movieApiService: any;
+  serverApi:any,
   isAuth: boolean;
   jwtToken: any;
   id: any;
@@ -24,6 +34,7 @@ export default class App extends Component<any, MyState> {
     super(props);
     this.state = {
       movieApiService: new MovieApiService(),
+      serverApi : new ServerApi(),
       isAuth: false,
       jwtToken: null,
       id: null,
@@ -64,38 +75,53 @@ export default class App extends Component<any, MyState> {
   };
 
   render() {
-    const { isAuth, movieApiService } = this.state;
+    const { isAuth,id,jwtToken } = this.state;
     console.log(isAuth);
-    // if (!isAuth){
-    //   return (
-    //     <BrowserRouter>
-    //       <Switch>
-    //         <Route path="/" exact>
-    //           <AuthPage login={this.login} />
-    //         </Route>
-    //         <Redirect to="/" />
-    //       </Switch>
-    //     </BrowserRouter>
-    //   );
-    // }
+    if (!isAuth){
+      return (
+        <BrowserRouter>
+        <UserContextProvider value={{jwtToken,id,isAuth,login:this.login,logout:this.logout,serverApi:this.state.serverApi}}>
+          <Switch>
+            <Route path="/" exact>
+              <AuthPage />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+          </UserContextProvider>
+        </BrowserRouter>
+      );
+    }
     return (
-      <div className="app">
-        <Header logout={this.logout} />
-        <main>
-          <MovieApiServiceProvider value={this.state.movieApiService} >
-            <BrowserRouter>
-              <Switch>
-                <Route path="/" exact component={HomepageComponent}/>
-                <Route path="/list/:listName?" exact component={ListpageComponent}/>
-                <Route path="/movie/:id?" exact component={MoviePageComponent}/>
-                <Route path="/genres/:genre?" exact component={GenresList}/>
-                <Route render={() => <h2>Page not found</h2>} />
-              </Switch>
-            </BrowserRouter>
-          </MovieApiServiceProvider>
-        </main>
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <UserContextProvider value={{jwtToken,id,isAuth,login:this.login,logout:this.logout,serverApi:this.state.serverApi}} >
+        <div className="App">
+          <Header  />
+          <main className="row">
+            <MovieApiServiceProvider value={this.state.movieApiService} >
+              
+                <Switch>
+                  <Route path="/profile" exact>
+                    <ProfilePage />
+                  </Route>
+                  <Route path="/watchlist" exact>
+                    <Watchlist />
+                  </Route>
+                  <Route path="/rating" exact>
+                    <RatingPage />
+                  </Route>
+                  <Route path="/" exact component={HomepageComponent}/>
+                  <Route path="/list/:listName?" exact component={ListpageComponent}/>
+                  <Route path="/movie/:id?" exact component={MoviePageComponent}/>
+                  <Route path="/genres/:genre?" exact component={GenresList}/>
+                  <Route render={() => <h2>Page not found</h2>} />
+                </Switch>
+              
+            </MovieApiServiceProvider>
+          </main>
+          <Footer/>
+        </div>
+        </UserContextProvider>
+      </BrowserRouter>
     );
   }
 }

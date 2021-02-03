@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect,useState}  from 'react';
 import ItemList from '../list/list.component';
 import {
   withData,
@@ -7,10 +7,13 @@ import {
   withOnclick,
 } from '../hoc';
 import compose from '../../utils/compose';
+import noUiSlider from 'nouislider';
 import ISO639 from 'iso-639-1';
 import { withRouter } from 'react-router-dom';
-
+import ServerApi from '../../services/serverApi';
+import { MovieApiServiceConsumer } from '../../components/movie_service_context';
 import './style.css';
+import { UserContextConsumer } from '../../context/login-context';
 
 const renderName = ({ name }: { name: string }) => <span>{name}</span>;
 
@@ -20,8 +23,22 @@ const mapGenresMethodsToProps = (movieApiService: any) => {
   };
 };
 
-const renderMovieListItem = (item: any) => {
+const RenderMovieListItem = (item: any,prop:any) => {
+  
+  const handlerWatchlist = async(item:any,val:any) => {
+    try {
+      const {jwtToken,serverApi} = val;
+      console.log(jwtToken,serverApi);
+      const res = await serverApi.addWatchList(item,jwtToken);
+      M.toast({html: res.mes})
+    } catch (error) {
+      M.toast({html: error});
+    }
+  } 
+  
   return (
+    <UserContextConsumer>
+    {value =>
     <div className="col s12">
       <div className="card horizontal movie-list-card">
         <div className="card-image">
@@ -39,9 +56,15 @@ const renderMovieListItem = (item: any) => {
           <div className="card-action">
             <a href="#">This is a link</a>
           </div>
+          <a className="btn-floating btn-large waves-effect waves-light red" onClick={(e) => {
+            e.stopPropagation();
+            handlerWatchlist(item,value)
+          }}><i className="material-icons">add</i></a>
+          
         </div>
       </div>
-    </div>
+    </div>}
+    </UserContextConsumer>
     /*<div className="item-wrapper valign-wrapper row">
       <div
         className="item-poster col s2"
@@ -102,7 +125,7 @@ const GenresList = compose(
 const TopRatedMoviesList = compose(
                       withMovieService(mapTopRatedMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem),
+                      withChildFunction(RenderMovieListItem),
                       withOnclick(onItemSelected),
                       withRouter,
                     )(ItemList);
@@ -110,7 +133,7 @@ const TopRatedMoviesList = compose(
 const LatestMovie = compose(
                       withMovieService(mapLatestMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem),
+                      withChildFunction(RenderMovieListItem),
                       withOnclick(onItemSelected),
                       withRouter,
                     )(ItemList);
@@ -118,7 +141,7 @@ const LatestMovie = compose(
 const PopularMoviesList = compose(
                       withMovieService(mapPopularMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem),
+                      withChildFunction(RenderMovieListItem),
                       withOnclick(onItemSelected),
                       withRouter,
                     )(ItemList);
@@ -126,7 +149,7 @@ const PopularMoviesList = compose(
 const UpcomingMoviesList = compose(
                       withMovieService(mapUpcomingMoviesMethodToProps),
                       withData,
-                      withChildFunction(renderMovieListItem),
+                      withChildFunction(RenderMovieListItem),
                       withOnclick(onItemSelected),
                       withRouter,
                     )(ItemList);
